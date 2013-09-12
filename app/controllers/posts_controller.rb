@@ -7,4 +7,8 @@ class PostsController < ApplicationController
   def index
     render :text => Post.all.map(&:title).join("\n")
   end
+
+  def root
+    render :text => "hello rails"
+  end
 end

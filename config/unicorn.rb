@@ -5,12 +5,13 @@ preload_app true
 
 rails_env = ENV['RAILS_ENV'] || 'production'
 
-root_path = "/opt/apps/cluster"
-working_directory "#{root_path}/current"
-pid "#{working_directory}/tmp/pids/unicorn.cluster.pid"
-
 if rails_env == 'production'
+  root_path = "/opt/apps/cluster"
   shared_path = root_path+"/shared"
+
+  working_directory "#{root_path}/current"
+  pid "#{working_directory}/tmp/pids/unicorn.cluster.pid"
+
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"
   stdout_path "#{shared_path}/log/unicorn.stdout.log"
@@ -25,7 +26,7 @@ before_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.connection.disconnect!
 
-  old_pid = "tmp/unicorn.cluster.pid.oldbin"
+  old_pid = "tmp/pids/unicorn.cluster.pid.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
       Process.kill("QUIT", File.read(old_pid).to_i)

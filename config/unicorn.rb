@@ -6,11 +6,12 @@ preload_app true
 rails_env = ENV['RAILS_ENV'] || 'production'
 
 if rails_env == 'production'
-  root_path = "/opt/apps/cluster"
-  shared_path = root_path+"/shared"
+  root_path    = "/opt/apps/cluster"
+  shared_path  = root_path+"/shared"
+  working_path = "#{root_path}/current"
 
-  working_directory "#{root_path}/current"
-  pid "#{working_directory}/tmp/pids/unicorn.cluster.pid"
+  working_directory working_path
+  pid "#{working_path}/tmp/pids/unicorn.cluster.pid"
 
 
   stderr_path "#{shared_path}/log/unicorn.stderr.log"

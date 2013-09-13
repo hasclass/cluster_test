@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    render :text => Post.all.map(&:title).join("\n")
+    render :text => Post.all.map(&:title).join(", ")
   end
 
   def root
